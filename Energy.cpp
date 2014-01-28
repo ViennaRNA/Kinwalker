@@ -13,8 +13,6 @@ extern "C" {
 #include "fold_vars.h"
 #include "utils.h"
 #include "pair_mat.h"
-extern int
-energy_of_struct_pt (char *string, short * ptable, short *s, short *s1);
 }
 extern short * S;
 extern short * S1;

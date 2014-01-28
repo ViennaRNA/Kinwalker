@@ -5,6 +5,10 @@ extern short *pair_table;
 /*@exits@*/
 //extern void   nrerror(const char message[]);
 
+extern "C" {
+#include "utils.h"
+}
+
 void Cout(std::string s){std::cout<<s;}
 
   std::string Str(double x) 

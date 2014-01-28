@@ -33,12 +33,7 @@ extern "C" {
   #include "fold.h"
   #include "energy_const.h"
   #include "utils.h"
-  extern float fold(const char* sequence, char* structure);
-  extern void export_fold_arrays(int **f5_p, int **c_p, int **fML_p,
-				 int **fM1_p, int **indx_p, char **ptype_p);
-  extern  char * backtrack_fold_from_pair(char* seq,int i,int  j);
-  extern void   free_arrays(void); 
-  extern int fold_constrained;
+  #include "fold_vars.h"
 }
 #include "Energy.h"
 #include "MorganHiggs.h"
