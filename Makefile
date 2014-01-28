@@ -10,14 +10,16 @@ CC       = gcc
 CXX      = g++
 LL       = g++
 DEFS     =
-VRNADIR  = ${HOME}/C/ViennaRNA
-INCL     = -I. -I$(VRNADIR)/H
+VRNA_INC = $(shell pkg-config --cflags RNAlib2)
+VRNA_LIB = $(shell pkg-config --libs RNAlib2)
+LDFLAGS  = 
+INCL     =  -I. $(VRNA_INC)
 WARN     = -Wall -ansi -pedantic
 OPTI     = -O3
 #OPTI     = -O3 -p -g3
 CFLAGS   = $(WARN) $(OPTI) $(DEFS) $(INCL)
-LIBS     = -L$(VRNADIR)/lib -lRNA  -lm -lstdc++
-CSRC     = options.c findpath.c
+LIBS     = ${VRNA_LIB}  -lm -lstdc++
+CSRC     = options.c
 COBJ     = $(foreach file, $(CSRC:.c=.o), $(file))
 CXXSRC   = Energy.cpp Node.cpp Util.cpp MorganHiggs.cpp main.cpp
 CXXOBJ   = $(foreach file, $(CXXSRC:.cpp=.o), $(file))
@@ -35,7 +37,7 @@ $(CXXOBJ): %.o: %.cpp
 $(COBJ): %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 $(EXE): $(COBJ) $(CXXOBJ)
-	$(LL) $(CFLAGS) -o $(EXE) $(COBJ) $(CXXOBJ) $(LIBS)
+	$(LL) $(LDFLAGS) $(CFLAGS) -o $(EXE) $(COBJ) $(CXXOBJ) $(LIBS)
 clean:
 	rm -f $(COBJ) $(CXXOBJ) $(EXE)
 backup: clean
