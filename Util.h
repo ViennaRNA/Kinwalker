@@ -1,8 +1,11 @@
 #include <string>
+#include <cstring>
 #include <vector>
 #include <sstream>
 #include <cstdarg>
 #include <iostream>
+#include <cstdlib>
+#include <algorithm>
 
 void Cout(std::string s);
 

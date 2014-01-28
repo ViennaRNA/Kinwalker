@@ -133,9 +133,9 @@ public:
 
   void AddInside(std::pair<int,int> bp,char first,char second);
 
-  void AddOutside(int first,int second,char first,char second);
+  void AddOutside(int first,int second,char cfirst,char csecond);
 
-  void AddInside(int first,int second,char first,char second);
+  void AddInside(int first,int second,char cfirst,char csecond);
 
 
  static  bool IsGCPair(char first,char second);

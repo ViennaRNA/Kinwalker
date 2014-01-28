@@ -2,9 +2,10 @@
   Last changed Time-stamp: <2006-10-13 22:34:37 xtof>
   $Id: Energy.cpp,v 1.12 2007/11/03 16:45:58 Kinwalker Exp $
 */
+#include <cstdlib>
 #include <iostream>
 #include <string>
-
+#include <cstring>
 #include "Energy.h"
 
 
