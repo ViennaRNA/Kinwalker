@@ -1,0 +1,186 @@
+
+KINWALKER(1)                       kinwalker                      KINWALKER(1)
+
+
+
+NNAAMMEE
+       kinwalker - predicts RNA folding trajectories
+
+SSYYNNOOPPSSIISS
+       kkiinnwwaallkkeerr   [--help]  [--verbose] [--test] [--interrupt] [--printfront]
+       [--barrier_heuristic=_C_H_A_R] [--dangle=_I_N_T] [--grouping=_S_T_R_I_N_G] [--looka-
+       head=_I_N_T] [--maxkeep=_I_N_T] [--nolonely=_I_N_T] [--transcribed=_I_N_T] [--tran-
+       scription_rate=_I_N_T] [--windowsize=_I_N_T]
+
+
+
+DDEESSCCRRIIPPTTIIOONN
+       The KKiinnwwaallkkeerr algorithm predicts RNA  folding  trajectories  and  first
+       passage  times  by  connecting  the  denatured state with the predicted
+       native structure through a series of intermediate states.
+
+       KKiinnwwaallkkeerr splits the folding process into a series of events where each
+       event  can either be a folding event or a transcription event.  In each
+       transcription event one base from the RNA sequence is appended  to  the
+       already  transcribed and (partially) folded subsequence. KKiinnwwaallkkeerr exe-
+       cutes transcription events at regular time intervals. In  each  folding
+       event a subsequence of the already transcribed RNA sequence is selected
+       and a new structure is formed by combining base pairs from the  current
+       structure  with  base pairs from the mfE structure of that subsequence.
+       This is done in such a way that the new structure includes  base  pairs
+       from  both  structures in an energetically favorable manner.  KKiinnwwaallkkeerr
+       estimates the waiting times for individual folding events depending  on
+       the  height of the energy barrier between the current structure and the
+       new structure into which the molecule is folded. Folding events between
+       structures  can  only occur, if the energy barrier between them is less
+       than the maximum allowed energy barrier. As folding paths can  only  be
+       calculated   exhaustively   for   short  sequences  (n>100),  heuristic
+       approaches have to be employed which explicitly construct a (re)folding
+       path between the two structures. The saddle height is then estimated as
+       the highest point along the path. The best known algorithm for approxi-
+       mating  saddle  heights  between  RNA conformations is the Morgan-Higgs
+       heuristic, which tries to find a folding path from an origin  secondary
+       structure  to  a  target  secondary  structure where the maximum height
+       along the path is minimal. The heuristic models  state  transitions  at
+       base pair resolution.
+
+       Uses  the _V_i_e_n_n_a_R_N_A package (currently available at _h_t_t_p_:_/_/_w_w_w_._t_b_i_._u_n_i_-
+       _v_i_e_._a_c_._a_t_/_~_i_v_o_/_R_N_A_/) for free energy calculations and determination  of
+       locally optimal substructures.
+
+       KKiinnwwaallkkeerr  reads the RNA sequence from stdin and returns the intermedi-
+       ate states of the predicted folding trajectories along with first  pas-
+       sage  times  and  energy  barriers.   KKiinnwwaallkkeerr terminates when the mfE
+       structure is reached.
+
+
+OOPPTTIIOONNSS
+       Usage: ./kinwalker [OPTIONS] < SeqFile  > Outfile
+
+              Options without argument:
+
+
+       -h,--help
+              Print usage information for ./kinwalker.
+
+
+       --init_structure
+              Start with a structure other than the open chain.
+
+
+       --interrupt
+              Allow interrupted  folding  trajectories  when  the  barrier  is
+              exceeded.
+
+
+       --printfront
+              Creates  PS  plots  of  front  progression  with  index i, named
+              front_trajectory($i).ps.
+
+
+       -t,--test
+              Use test sequence.
+
+
+       -v,--verbose
+              Verbose mode. Print debugging messages about program progress.
+
+
+
+              Options with argument:
+
+
+       --barrier_heuristic=CHAR
+              'M' Morgan-Higgs,'S' limits small stacks,'B'  Barriers,'A'  all,
+              then take minimum. Default: >M<
+
+
+       --dangle=INT
+              Dangle value of 0,1,2 as in the ViennaRNA package. Default: >0<
+
+
+       --grouping=STRING
+              How  barrier_heuristic  'M' treats conflict groups("standard" or
+              "regroup"). Default: >standard<
+
+
+       --lookahead=INT
+              #BP that MorganHiggs forms its subpaths from. Default: >1<
+
+
+       --maxkeep=INT
+              Breadth  of  breadth  first  search  in   barrier_heuristic='B'.
+              Default: >1<
+
+
+       --nolonely=INT
+              Value of noLonelyPairs as in ViennaRNA. Default: >2<
+
+
+       --transcribed=INT
+              #bases  initially  transcribed,  <0  means  all  is transcribed.
+              Default: >1<)
+
+
+       --transcription_rate=FLOAT
+              #bases transcribed per second. Default: >200<)
+
+
+       --windowsize=INT
+              Max size of substructures considered for folding  events  during
+              transcription, 0= all are considered. Default: >0<)
+
+
+
+EEXXAAMMPPLLEE
+       ..//kkiinnwwaallkkeerr  ----ttrraannssccrriibbeedd==5500 ----ttrraannssccrriippttiioonn__rraattee==8800 ----bbaarrrriieerr__hheeuurriiss--
+       ttiicc==SS ----iinntteerrrruupptt ----wwiinnddooww__ssiizzee==110000 << hhookk..sseeqq >> hhookk..oouutt
+
+
+       Computes the folding trajectory of the sequence in hok.seq  and  writes
+       it to hok.out. Folding starts with 50 nucleotide transcribed at a tran-
+       scription rate of 80 nc/sec. Interrupted trajectories are allowed,  the
+       'S'  barrier  heuristic  is used and only substructures of length up to
+       100 nc are considered during transcription (windows_size).
+
+
+       ..//kkiinnwwaallkkeerr  ----pprriinnttffrroonntt  << hhookk..sseeqq >> hhookk..oouutt
+
+
+       Folds the hok.seq sequence with standard parameters, printing  interme-
+       diate  states  of  the  folding  trajectory  to  successive files named
+       front_trajectory1.ps, front_trajectory2.ps, etc.
+
+
+FFIILLEESS
+       none
+
+
+DDEEPPEENNDDEENNCCIIEESS
+       ViennaRNA package (http://www.tbi.univie.ac.at/~ivo/RNA/)
+
+
+AAUUTTHHOORR
+       Michael Geis <michael at bioinf  dot  uni-leipzig  dot  de>,  Christoph
+       Flamm
+
+
+RREEFFEERREENNCCEESS
+       S.  R. Morgan and P. G. Higgs. Barrier heights between ground states in
+       a model of RNA secondary structure, J. Phys. A.: Math. Gen., 31,  1998,
+       3153-3170.
+
+       Christoph  Flamm  and  Ivo  L.  Hofacker and Sebastian Maurer-Stroh and
+       Peter F. Stadler and Martin Zehl. Design of Multi-Stable RNA Molecules,
+       RNA, 2000,7, 254-265.
+
+
+
+
+
+
+
+
+
+
+Michael Geis                          0.1                         KINWALKER(1)

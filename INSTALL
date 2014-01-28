@@ -1,0 +1,4 @@
+inwalker so far has been tested under Fedora Core and Ubuntu Linux.
+It requires gcc,g++ and the ViennaRNA library. Edit the Makefile by
+adjusting the variable VRNADIR to the location of the ViennaRNA library.
+To build, simply type make. For usage, type ./kinwalker -h
