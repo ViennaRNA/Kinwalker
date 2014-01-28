@@ -581,6 +581,7 @@ Node::FindLocalExtrema()
 {
   int *f5, *c, *fML, *fM1, *indx; char *ptype;
   export_fold_arrays(&f5,&c,&fML,&fM1,&indx,&ptype);
+  if(verbose>=2) Cout("#extrema: "+Str((int)extrema.size())+"\n");
   int n = matrix_size;
   for (int i=1; i<=n-TURN-1; i++) {
     for (int j=i+TURN+1; j<=n; j++) {
@@ -598,8 +599,8 @@ Node::FindLocalExtrema()
   // (1,n) is in general not a pair. You can't include it in the list
   //Node node2=Node(1,n,energy);
   extrema.push_back(new Node(1,n,energy));//& node2);
-  sort(extrema.begin(), extrema.end(), Node::LessThan);  
   if(verbose>=3) Cout("#extrema: "+Str((int)Node::extrema.size())+"\n");
+  stable_sort(extrema.begin(), extrema.end(), Node::LessThan);  
 }
 
 
@@ -941,6 +942,7 @@ void Node::Transcribe(){
   pair_table[0]=Node::transcribed;
   Node::front_structure+=".";
   MakePairTableFromFrontStructure();
+  Node::front_energy=Evaluate(Node::front_structure);
 }
 
 bool Node::IsTranscribed(){
