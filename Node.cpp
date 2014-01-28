@@ -291,12 +291,13 @@ void Node::CalculateFoldingPath(Node* extremum,std::string integrated_structure)
       int maxE_idx = -1;
       int t = Node::transcribed;
       std::vector<std::pair<double,std::string> > v;
-
+      /* length of path always is the base pair distance + 1 */
+      p_len = bp_distance(const_cast<char*>(sequence.substr(0,t).c_str()),
+                          const_cast<char*>(Node::front_structure.c_str())) + 1;
       p = get_path(const_cast<char*>(sequence.substr(0,t).c_str()),
 		   const_cast<char*>(Node::front_structure.c_str()),
 		   const_cast<char*>(integrated_structure.substr(0,t).c_str()),
-		   Node::OptS->maxkeep,
-		   &p_len);
+		   Node::OptS->maxkeep);
       bool barrier_exceeded=false;
       for (int i=0; i<p_len; i++) {
 	// memorize idx of structure with highest energy seen so far

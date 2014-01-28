@@ -57,16 +57,6 @@ std::string PrintPairTable(){
   return s;
 }
 
-void
-PrettyPrint(char *fmt, ...)
-{
-  va_list args;
-
-  va_start(args, fmt);
-  vfprintf(stdout, fmt, args);
-  fflush(stdout);
-  va_end(args);  
-}
 
 std::string PrintBasePair(std::pair<int,int> bp){
   return "("+Str(bp.first)+","+Str(bp.second)+")";
@@ -283,21 +273,6 @@ ConformationToStacks(std::vector<std::vector<std::pair<int,int> > > & stacks, st
   }
 }
 
-void *MG_space(unsigned size) {
-  void *pointer;
-  
-  if ( (pointer = (void *) calloc(1, (size_t) size)) == NULL) {
-#ifdef EINVAL
-    if (errno==EINVAL) {
-      fprintf(stderr,"SPACE: requested size: %d\n", size);
-       printf("SPACE allocation failure -> EINVAL");
-    }
-    if (errno==ENOMEM)
-#endif
-      printf("SPACE allocation failure -> no memory");
-  }
-  return  pointer;
-}
 
 #ifdef WITH_DMALLOC
 #define MG_space(S) calloc(1,(S))
@@ -314,7 +289,7 @@ void *MG_space(unsigned size) {
    //   short *table;
    
    length = (short) strlen(structure);
-   stack = (short *) MG_space(sizeof(short)*(length+1));
+   stack = (short *) space(sizeof(short)*(length+1));
    //table = (short *) space(sizeof(short)*(length+2));
    pair_table[0] = length;
    
