@@ -12,7 +12,10 @@
 #include "Neighbor.h"
 #include "Utils.h"
 #include "options.h"
-#define INF 1000000
+
+extern "C" {
+#include "energy_const.h" /* defines INF */
+}
 
 
 /**

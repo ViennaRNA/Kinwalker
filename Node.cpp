@@ -2,12 +2,12 @@
   Last changed Time-stamp: <2007-07-10 19:27:22 xtof>
   $Id: Node.cpp,v 1.35 2007/11/03 16:45:58 Kinwalker Exp $
 */
-#include "Node.h"
 
 #include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <utility>
+#include "Node.h"
 
 #include "template_utils.c"
 
@@ -16,7 +16,7 @@
 #define EPSILON .00000000001
 
 #define MIN_ENERGY_DIFF .01
-#define INF 1000000
+
 double BARRIER_TOO_HIGH=10000;//std::numeric_limits<int>::max();
 // class variables
 int Node::verbose;

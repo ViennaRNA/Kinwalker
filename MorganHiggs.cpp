@@ -3,13 +3,17 @@
   $Id: MorganHiggs.cpp,v 1.13 2007/10/21 21:01:35 Kinwalker Exp $
 */
 
+#include <cstring>
 #include "MorganHiggs.h"
 #define BP_ADD_CONST 10000
-#define INF 1000000
 using std::cout;
 using std::endl;
 
 extern short * pair_table;
+
+extern "C" {
+#include "energy_const.h" /* defines INF */
+}
 
 bool MHS_debug=false;
 int min_stack_size=1;
