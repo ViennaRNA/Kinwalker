@@ -11,6 +11,10 @@
 
 #include "template_utils.c"
 
+extern "C" {
+#include "findpath.h"
+}
+
 #define MS_PER_TIME_UNIT .0001
 #define TIME_VS_DELTAG_DY_DX (8.0/11.0)
 #define EPSILON .00000000001
@@ -288,24 +292,18 @@ void Node::CalculateFoldingPath(Node* extremum,std::string integrated_structure)
       path_t *p;
       int p_len = 0;
       double maxE = -INF;//std::numeric_limits<double>::max();
-      int maxE_idx = -1;
+      int maxE_idx = 0;
       int t = Node::transcribed;
       std::vector<std::pair<double,std::string> > v;
-      /* length of path always is the base pair distance + 1 */
-      p_len = bp_distance(const_cast<char*>(sequence.substr(0,t).c_str()),
-                          const_cast<char*>(Node::front_structure.c_str())) + 1;
       p = get_path(const_cast<char*>(sequence.substr(0,t).c_str()),
                    const_cast<char*>(Node::front_structure.c_str()),
                    const_cast<char*>(integrated_structure.substr(0,t).c_str()),
                    Node::OptS->maxkeep);
-      bool barrier_exceeded=false;
-      maxE_idx = 0;
       for (int i=0; p[i].s != NULL; i++) {
         // memorize idx of structure with highest energy seen so far
-        if (!barrier_exceeded && p[i].en > maxE) {
+        if(p[i].en > maxE){
           maxE = p[i].en;
           maxE_idx = i+1;
-          //barrier_exceeded=true;
         }
         v.push_back(std::make_pair(p[i].en, p[i].s));
       }
