@@ -1,4 +1,4 @@
-AC_INIT(Kinwalker,1.0)
+AC_INIT(kinwalker,1.1)
 AM_INIT_AUTOMAKE(-Wall -Werror foreign)
 
 if test "$GCC" = yes; then
