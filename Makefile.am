@@ -8,8 +8,8 @@ kinwalker_SOURCES = main.cpp \
                     options.c options.h \
                     Util.cpp Util.h 
 
-LDADD = $(RNALIB_LIBS)
+LDADD = $(VRNA_LIBS)
 
-AM_CPPFLAGS = $(RNALIB_CFLAGS)  
+AM_CPPFLAGS = $(VRNA_CFLAGS)  
 
 EXTRA_DIST = INSTALL template_utils.c kinfold_test.seq
