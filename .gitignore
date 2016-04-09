@@ -1,5 +1,6 @@
 *.o
 kinwalker
+kinwalker.exe
 
 .deps
 config.h*
