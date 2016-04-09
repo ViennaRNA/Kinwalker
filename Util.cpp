@@ -70,18 +70,6 @@ std::string PrintBasePairList(std::vector<std::pair<int,int> > list){
 }
 
 
-/**
- * Create a Random RNA string of specified length.
- */
-void
-GetRNAString(char* sequence, int length)
-{ 
-  char bases[4] = {'A','U','C','G'};
-  for (int j=0; j<length; j++) sequence[j] = bases[lrand48() % 4];
-  sequence[length] = '\0';
-}
-
-
 std::string
 PairTableToStructure(std::vector<int> pTbl)
 {
